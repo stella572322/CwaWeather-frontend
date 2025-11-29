@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>森森天氣</title>
+    <title>ssu chieh 天氣預報局</title>
     <link rel="icon" type="image/png" href="./icon-v2.png">
     <link rel="apple-touch-icon" href="./icon-v2.png">
     <link rel="apple-touch-icon" sizes="180x180" href="./icon-v2.png">
@@ -15,14 +15,15 @@
 
     <style>
         :root {
-            --ac-green: #7DE1A9;
-            --ac-bg-pattern: #8FD8AF;
-            --ac-cream: #FFFEF2;
-            --ac-yellow: #F9F195;
-            --ac-brown: #796452;
-            --ac-blue: #4FB5D9;
-            --ac-dark: #58504A;
-            --ac-card-border: #E6E0C8;
+            /* 紫色主題變數 */
+            --ac-green: #7D5CFF; /* 主色（保留變數名稱以避免大量改動） */
+            --ac-bg-pattern: #B89CFF; /* 背景漸層次色 */
+            --ac-cream: #F6F3FF; /* 卡片、底色（淺紫/奶白） */
+            --ac-yellow: #E8D9FF; /* 活動標籤用的亮色（原 yellow 位置） */
+            --ac-brown: #3B2B5A; /* 文字 / 強調色（深紫代替棕色） */
+            --ac-blue: #5A3CE6; /* 小標 / 氣泡用深紫 */
+            --ac-dark: #2E2540; /* 深色文字 */
+            --ac-card-border: #EDE9FF; /* 卡片邊框（淡紫） */
         }
 
         * {
@@ -34,10 +35,9 @@
 
         body {
             font-family: 'Zen Maru Gothic', sans-serif;
-            background-color: var(--ac-green);
-            /* 更細緻的斜紋背景 */
-            background-image:
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.2) 20px, rgba(255, 255, 255, 0.2) 40px);
+            /* 紫色漸層背景 + 細緻斜紋疊層 */
+            background: linear-gradient(135deg, var(--ac-green) 0%, var(--ac-bg-pattern) 100%);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.03), rgba(255,255,255,0.03) 20px, rgba(255,255,255,0.06) 20px, rgba(255,255,255,0.06) 40px), linear-gradient(135deg, var(--ac-green) 0%, var(--ac-bg-pattern) 100%);
             min-height: 100vh;
             color: var(--ac-dark);
             /* 防止 iOS 左右滑動 */
@@ -293,21 +293,24 @@
         }
 
         function getAdvice(rainProb, maxTemp) {
-            let rainIcon = "🌂";
-            let rainText = "不用帶傘";
+            let rainIcon = "🌈";
+            let rainText = "開心出門";
             if (parseInt(rainProb) > 30) {
-                rainIcon = "☂️";
+                rainIcon = "☔";
                 rainText = "記得帶傘！";
             }
 
-            let clothIcon = "👕";
+            let clothIcon = "🌸";
             let clothText = "舒適穿搭";
             if (parseInt(maxTemp) >= 28) {
-                clothIcon = "🎽";
+                clothIcon = "☀️";
                 clothText = "短袖出發";
             } else if (parseInt(maxTemp) <= 20) {
-                clothIcon = "🧥";
-                clothText = "加件外套";
+                clothIcon = "🥶";
+                clothText = "穿件外套";
+            } else if (parseInt(maxTemp) <= 10) {
+                clothIcon = "☃️";
+                clothText = "寒流來襲";
             }
 
             return { rainIcon, rainText, clothIcon, clothText };
